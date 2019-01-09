@@ -1,10 +1,10 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_board
 
   # GET /lists
   # GET /lists.json
   def index
-    @lists = List.all
+    @lists = @board.lists
   end
 
   # GET /lists/1
@@ -24,14 +24,12 @@ class ListsController < ApplicationController
   # POST /lists
   # POST /lists.json
   def create
-    @list = List.new(list_params)
+    @list = @board.lists.new(list_params)
 
     respond_to do |format|
       if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
+        format.json { render :show, status: :created, location: [@board, @list] }
       else
-        format.html { render :new }
         format.json { render json: @list.errors, status: :unprocessable_entity }
       end
     end
@@ -63,8 +61,8 @@ class ListsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_list
-      @list = List.find(params[:id])
+    def set_board
+      @board = Board.find(params[:board_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

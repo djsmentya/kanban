@@ -1,1 +1,5 @@
-json.array! @boards, partial: 'boards/board', as: :board
+@boards.each do |board|
+  json.set! board.id do
+    json.partial! board, partial: 'boards/board'
+  end
+end
