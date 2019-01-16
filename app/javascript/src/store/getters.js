@@ -1,5 +1,5 @@
 export default {
-	getBordLists: (state) => (boardId) => {
+	getBoardLists: (state) => (boardId) => {
     return state.lists
 	},
 
