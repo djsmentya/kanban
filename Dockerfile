@@ -30,5 +30,6 @@ RUN bundle exec rake assets:precompile
 
 EXPOSE 3000
 ENV RAILS_SERVE_STATIC_FILES='true'
+ENV RAILS_MASTER_KEY='b9e8014bfc293e369d6f9f4f8757047a'
 
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

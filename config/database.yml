@@ -82,7 +82,4 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: kanban_production
-  username: kanban
-  password: <%= ENV['KANBAN_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE'] %>
