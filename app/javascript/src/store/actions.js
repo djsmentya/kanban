@@ -29,7 +29,28 @@ export default {
   createList({ dispatch, commit }, { board, name }) {
     return axios.post(`/boards/${board}/lists.json`, { list: { name } })
     .then(response => {
-      dispatch('fetchLists')
+      dispatch('fetchLists', { board })
+    })
+  },
+
+  fetchCards({ commit }) {
+    return axios.get(`/cards.json`)
+      .then(response =>{
+        commit(types.FETCH_CARDS_SUCCESS, { cards: response.data})
+      })
+  },
+
+  createCard({ dispatch, commit }, { board, list, name }) {
+    return axios.post(`/boards/${board}/lists/${list}/cards.json`, { card: { name } })
+    .then(response => {
+      dispatch('fetchCards')
+    })
+  },
+
+  updateCard({ dispatch, commit }, { board, list, card, name }) {
+    return axios.put(`/boards/${board}/lists/${list}/cards/${card}.json`, { card: { name } })
+    .then(response => {
+      dispatch('fetchCards')
     })
   },
 

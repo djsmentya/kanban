@@ -9,4 +9,8 @@ export default {
   [types.FETCH_LISTS_SUCCESS] (state, { lists }) {
     state.lists = { ...lists }
   },
+
+  [types.FETCH_CARDS_SUCCESS] ( state, { cards }) {
+    state.cards = { ...cards }
+  }
 }

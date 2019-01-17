@@ -1,5 +1,6 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: [:show, :edit, :update, :destroy]
+  before_action :set_board, except: :index
+  before_action :set_list, except: :index
 
   # GET /cards
   # GET /cards.json
@@ -24,12 +25,11 @@ class CardsController < ApplicationController
   # POST /cards
   # POST /cards.json
   def create
-    @card = Card.new(card_params)
+    @card = @list.cards.new(card_params)
 
     respond_to do |format|
       if @card.save
-        format.html { redirect_to @card, notice: 'Card was successfully created.' }
-        format.json { render :show, status: :created, location: @card }
+        format.json { render :show, status: :created, location: [@board, @list, @card] }
       else
         format.html { render :new }
         format.json { render json: @card.errors, status: :unprocessable_entity }
@@ -40,10 +40,10 @@ class CardsController < ApplicationController
   # PATCH/PUT /cards/1
   # PATCH/PUT /cards/1.json
   def update
+    @card = @list.cards.find(params[:id])
     respond_to do |format|
       if @card.update(card_params)
-        format.html { redirect_to @card, notice: 'Card was successfully updated.' }
-        format.json { render :show, status: :ok, location: @card }
+        format.json { render :show, status: :ok, location: [@board, @list, @card] }
       else
         format.html { render :edit }
         format.json { render json: @card.errors, status: :unprocessable_entity }
@@ -63,8 +63,12 @@ class CardsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_card
-      @card = Card.find(params[:id])
+    def set_list
+      @list = @board.lists.find(params[:list_id])
+    end
+
+    def set_board
+      @board = Board.find(params[:board_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

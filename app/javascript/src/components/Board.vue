@@ -2,7 +2,9 @@
   <div>
     <h3>Board: {{ board.name }}</h3>
     <input type="text" placeholder="Add A list" v-model="listName"  @keyup.enter="add()" />
-    <column v-for="(list, board) in lists" :key="index" :name="list.name" />
+    <div class="row">
+      <column v-for="(list, index) in lists" :key="index" :list="list" />
+    </div>
   </div>
 </template>
 
@@ -21,7 +23,7 @@
       }
     },
     methods: {
-      ...mapActions(['fetchBoards', 'fetchLists', 'createList']),
+      ...mapActions(['fetchBoards', 'fetchLists', 'fetchCards', 'createList']),
 
       add() {
         this.createList({ board: this.boardId, name: this.listName })
@@ -43,6 +45,7 @@
 
     created() {
       this.fetchBoards()
+      this.fetchCards()
       this.fetchLists({ board: this.boardId })
     }
   }

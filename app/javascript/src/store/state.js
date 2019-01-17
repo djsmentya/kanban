@@ -7,7 +7,7 @@ export default {
       name
     }
   */},
-  tasks: {/*
+  cards: {/*
     id: {
       id,
       list,
